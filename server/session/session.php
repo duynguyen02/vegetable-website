@@ -10,6 +10,10 @@ function setSession($loginEmail){
     $_SESSION[LOGIN_EMAIL_SESSION_NAME] = $loginEmail;
 }
 
+function getSession(){
+    return $_SESSION[LOGIN_EMAIL_SESSION_NAME];
+}
+
 function destroySession(){
     session_destroy();
 }
