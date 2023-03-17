@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS vegetable_showroom;
 
-CREATE DATABASE vegetable_showroom CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE vegetable_showroom CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 USE vegetable_showroom;
 
@@ -82,3 +82,10 @@ CREATE TABLE LienHe
     MaKhachHang INT,
     CONSTRAINT FK_MaKhachHang FOREIGN KEY (MaKhachHang) REFERENCES KhachHang (MaKhachHang)
 );
+
+INSERT INTO QuanTriVien(MatKhau, Email, NgayTao)
+VALUES (
+        SHA1('123456'),
+        'admin@admin.com',
+        NOW()
+       );

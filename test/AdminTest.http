@@ -1,5 +1,5 @@
 # dang nhap
-POST http://localhost/vagetable-showroom-website/server/login.php
+POST http://localhost/vegetable-website/server/login.php
 Content-Type: application/x-www-form-urlencoded
 
 email=admin@admin.com&password=123456
@@ -7,7 +7,7 @@ email=admin@admin.com&password=123456
 ###
 
 # dang xuat
-http://localhost/vagetable-showroom-website/server/logout.php
+POST http://localhost/vegetable-website/server/logout.php
 
 ###
 

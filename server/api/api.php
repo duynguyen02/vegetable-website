@@ -28,7 +28,7 @@ function api_msg_response($message, int $statusCode, bool $status = null){
 function api_response(array $response, int $statusCode){
     header('Content-Type: application/json; charset=utf-8');
     http_response_code($statusCode);
-    echo json_encode($response);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
 function api_checking_connection($connection){
