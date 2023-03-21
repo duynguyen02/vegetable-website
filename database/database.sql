@@ -11,28 +11,27 @@ USE vegetable_showroom;
 CREATE TABLE NoiSanXuat
 (
     MaNoiSanXuat  INT AUTO_INCREMENT,
-    CongTySanXuat VARCHAR(255) NOT NULL,
-    DiaChi        VARCHAR(255) NOT NULL,
+    CongTySanXuat VARCHAR (255) NOT NULL,
+    DiaChi        VARCHAR (255) NOT NULL,
     NgayTao       DATETIME     NOT NULL,
-    PRIMARY KEY (MaNoiSanXuat)
+    PRIMARY KEY MaNoiSanXuat
 );
-
 CREATE TABLE LoaiThucPham
 (
     MaLoaiThucPham INT AUTO_INCREMENT,
-    LoaiThucPham   VARCHAR(255) NOT NULL,
+    LoaiThucPham   VARCHAR (255) NOT NULL,
     NgayTao        DATETIME     NOT NULL,
-    PRIMARY KEY (MaLoaiThucPham)
+    PRIMARY KEY MaLoaiThucPham
 );
 
 CREATE TABLE ThucPham
 (
     MaThucPham     INT AUTO_INCREMENT,
-    ThucPham       VARCHAR(255) NOT NULL,
+    ThucPham       VARCHAR (255) NOT NULL,
     MoTa           TEXT,
-    MauSac         VARCHAR(255) NOT NULL,
-    KichThuoc      VARCHAR(255) NOT NULL,
-    HinhDang       VARCHAR(255) NOT NULL,
+    MauSac         VARCHAR (255) NOT NULL,
+    KichThuoc      VARCHAR (255) NOT NULL,
+    HinhDang       VARCHAR (255) NOT NULL,
     ViTriHinhAnh   TEXT         NOT NULL,
     NgayTao        DATETIME     NOT NULL,
 
