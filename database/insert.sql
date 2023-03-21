@@ -1,4 +1,4 @@
-### khach hang ###
+-- ### khach hang ###
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
 VALUES (1, 'Duy Nguyễn', '0985645741', 'duyduy@gmail.com');
 
@@ -15,7 +15,7 @@ INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
 VALUES (5, 'Hạ Đình Phong', '0962439157', 'dinhphong@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (6, 'Nguyễn Thị Xuân Hương', '0965197854', 'nguỹenuanhuong@gmail.com');
+VALUES (6, 'Nguyễn Thị Xuân Hương', '0965197854', 'nguyenxuanhuong@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
 VALUES (7, 'Trần Ngọc Hà', '0958134975', 'ngocha@gmail.com');
@@ -30,40 +30,40 @@ INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
 VALUES (10, 'Nguyễn Hải Vân', '0985642487', 'Haivan@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (10, 'Nguyễn Hoàng Thanh Vân', '0963154982', 'ThanhVan@gmail.com');
+VALUES (11, 'Nguyễn Hoàng Thanh Vân', '0963154982', 'ThanhVan@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (11, 'Nguyễn Ngọc Thuỳ Linh', '0345629784', 'ThuyLinh@gmail.com');
+VALUES (12, 'Nguyễn Ngọc Thuỳ Linh', '0345629784', 'ThuyLinh@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (12, 'Nguyễn Ngọc Hoàng Kim', '0399841362', 'hoangkim@gmail.com');
+VALUES (13, 'Nguyễn Ngọc Hoàng Kim', '0399841362', 'hoangkim@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (13, 'Nguyễn Thị Trâm Anh', '0955416792', 'TramAnh@gmail.com');
+VALUES (14, 'Nguyễn Thị Trâm Anh', '0955416792', 'TramAnh@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (14, 'Trần Phạm Hải Anh', '0334167845', 'HaiAnhh@gmail.com');
+VALUES (15, 'Trần Phạm Hải Anh', '0334167845', 'HaiAnhh@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (15, 'Nguyễn Phạm Xuân Hương ', '0942641973', 'XuanHuong1111@gmail.com');
+VALUES (16, 'Nguyễn Phạm Xuân Hương ', '0942641973', 'XuanHuong1111@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (16, 'Nguyễn Ngọc Hiếu', '0956149218', 'NgocHieu@gmail.com');
+VALUES (17, 'Nguyễn Ngọc Hiếu', '0956149218', 'NgocHieu@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (17, 'Phạm Ngọc Thu', '0944513754', 'ThuNgocc@gmail.com');
+VALUES (18, 'Phạm Ngọc Thu', '0944513754', 'ThuNgocc@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (18, 'Nguyễn Thanh Ngọc', '0312954688', 'ThanhNgoc@gmail.com');
+VALUES (19, 'Nguyễn Thanh Ngọc', '0312954688', 'ThanhNgoc@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (19, 'Trần Ngọc Huyền Trang', '0977821649', 'HuyenTrang1405@gmail.com');
+VALUES (20, 'Trần Ngọc Huyền Trang', '0977821649', 'HuyenTrang1405@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (20, 'Trần Thị Tuyết Nhi', '0355281649', 'TuyetNhi@gmail.com');
+VALUES (21, 'Trần Thị Tuyết Nhi', '0355281649', 'TuyetNhi@gmail.com');
 
 
-### Lien He ###
+-- ### Lien He ###
 INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
 VALUES (1, 'Mua Bắp', NOW(), 'Tôi muốn mua bắp', 1);
 
@@ -86,7 +86,7 @@ INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
 VALUES (7, 'Mua Bí ngô', NOW(), 'Tôi muốn mua bí ngô', 7);
 
 INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
-VALUES (8, 'Mua rau mồng tơi', NOW(), 'Tôi muốn mua mua rau mồng tơi', 8);
+VALUES (8, 'Mua rau mồng tơi', NOW(), 'Tôi muốn mua rau mồng tơi', 8);
 
 INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
 VALUES (9, 'Mua rau diếp cá', NOW(), 'Tôi muốn mua rau diếp cá', 9);
@@ -119,13 +119,13 @@ INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
 VALUES (18, 'Mua nấm trâm vàng', NOW(), 'Tôi muốn mua nấm trâm vàng', 18);
 
 INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
-VALUES (19, 'Mua nấm kim châm', NOW(), 'Tôi muốn mua nấm kim châm', 20);
+VALUES (19, 'Mua nấm kim châm', NOW(), 'Tôi muốn mua nấm kim châm', 19);
 
 INSERT INTO LienHe (MaLienHe, TieuDe, NgayLienHe, NoiDung, MaKhachHang)
 VALUES (20, 'Mua nấm hoàng đế', NOW(), 'Tôi muốn mua nấm hoàng đế', 20);
 
 
-### loai thuc pham ###
+-- ### loai thuc pham ###
 INSERT INTO LoaiThucPham (MaLoaiThucPham, LoaiThucPham, NgayTao)
 VALUES (1, 'Rau', NOW());
 
@@ -133,10 +133,10 @@ INSERT INTO LoaiThucPham (MaLoaiThucPham, LoaiThucPham, NgayTao)
 VALUES (2, 'Trái Cây', NOW());
 
 INSERT INTO LoaiThucPham (MaLoaiThucPham, LoaiThucPham, NgayTao)
-VALUES (2, 'Củ', NOW());
+VALUES (3, 'Củ', NOW());
 
 
-### noi san xuat ###
+-- ### noi san xuat ###
 
 INSERT INTO NoiSanXuat (MaNoiSanXuat, CongTySanXuat, DiaChi, NgayTao)
 VALUES (1, 'Thiên Hạ Ngũ Tuyệt Group ', 'TP Hồ Chí Minh', NOW());
