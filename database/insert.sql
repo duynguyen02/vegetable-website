@@ -30,9 +30,6 @@ INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
 VALUES (10, 'Nguyễn Hải Vân', '0985642487', 'Haivan@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
-VALUES (10, 'Nguyễn Hoàng Thanh Vân', '0963154982', 'ThanhVan@gmail.com');
-
-INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
 VALUES (11, 'Nguyễn Ngọc Thuỳ Linh', '0345629784', 'ThuyLinh@gmail.com');
 
 INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
@@ -133,7 +130,7 @@ INSERT INTO LoaiThucPham (MaLoaiThucPham, LoaiThucPham, NgayTao)
 VALUES (2, 'Trái Cây', NOW());
 
 INSERT INTO LoaiThucPham (MaLoaiThucPham, LoaiThucPham, NgayTao)
-VALUES (2, 'Củ', NOW());
+VALUES (3, 'Củ', NOW());
 
 
 ### noi san xuat ###
