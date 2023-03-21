@@ -1,0 +1,18 @@
+POST http://localhost/vegetable-website/server/contact.php
+Content-Type: application/x-www-form-urlencoded
+
+customer_name=Duy Linh&phone_number=0668574575&email=duylinh@gmail.com&title=Toi muon mua ca chua&content=Toi muon mua muoi ky ca chua
+
+###
+# xoa khach hang
+DELETE http://localhost/vegetable-website/server/contact.php?method=customer&id=2
+
+###
+# xoa tin nhan
+DELETE http://localhost/vegetable-website/server/contact.php?method=message&id=3
+
+###
+GET http://localhost/vegetable-website/server/contact.php
+
+
+

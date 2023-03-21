@@ -1,98 +1,116 @@
+let hostname = window.location.host;
+
+let protocol = window.location.protocol;
+
+let server_url = `${protocol}//${hostname}/vegetable-website/server/`;
+
+/**
+ *
+ */
+const select = (el, all = false) => {
+  el = el.trim();
+  if (all) {
+    return [...document.querySelectorAll(el)];
+  } else {
+    return document.querySelector(el);
+  }
+};
+
+/**
+ *
+ */
+const on = (type, el, listener, all = false) => {
+  let selectEl = select(el, all);
+  if (selectEl) {
+    if (all) {
+      selectEl.forEach((e) => e.addEventListener(type, listener));
+    } else {
+      selectEl.addEventListener(type, listener);
+    }
+  }
+};
+
+/**
+ *
+ */
+const onscroll = (el, listener) => {
+  el.addEventListener("scroll", listener);
+};
+
+/**
+ *
+ */
+const getRequest = async (url) => {
+  try {
+    let res = await fetch(server_url + url, {
+      method: "GET",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
+ *
+ */
+const postRequest = async (url, body) => {
+  try {
+    let res = await fetch(server_url + url, {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: new URLSearchParams(body),
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
+ *
+ */
+const putRequest = async (url, body) => {
+  try {
+    let res = await fetch(server_url + url, {
+      method: "PUT",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: new URLSearchParams(body),
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
+ * 
+ * @param {*} email 
+ * @returns 
+ */
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 (function () {
   "use strict";
 
   /**
-   * Easy selector helper function
-   */
-  const select = (el, all = false) => {
-    el = el.trim();
-    if (all) {
-      return [...document.querySelectorAll(el)];
-    } else {
-      return document.querySelector(el);
-    }
-  };
-
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all);
-    if (selectEl) {
-      if (all) {
-        selectEl.forEach((e) => e.addEventListener(type, listener));
-      } else {
-        selectEl.addEventListener(type, listener);
-      }
-    }
-  };
-
-  /**
-   * Easy on scroll event listener
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener("scroll", listener);
-  };
-
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select("#navbar .scrollto", true);
-  const navbarlinksActive = () => {
-    let position = window.scrollY + 200;
-    navbarlinks.forEach((navbarlink) => {
-      if (!navbarlink.hash) return;
-      let section = select(navbarlink.hash);
-      if (!section) return;
-      if (
-        position >= section.offsetTop &&
-        position <= section.offsetTop + section.offsetHeight
-      ) {
-        navbarlink.classList.add("active");
-      } else {
-        navbarlink.classList.remove("active");
-      }
-    });
-  };
-  window.addEventListener("load", navbarlinksActive);
-  onscroll(document, navbarlinksActive);
-
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let header = select("#header");
-    let offset = header.offsetHeight;
-
-    if (!header.classList.contains("header-scrolled")) {
-      offset -= 16;
-    }
-
-    let elementPos = select(el).offsetTop;
-    window.scrollTo({
-      top: elementPos - offset,
-      behavior: "smooth",
-    });
-  };
-
-  /**
-   * Toggle .header-scrolled class to #header when page is scrolled
-   */
-  let selectHeader = select("#header");
-  if (selectHeader) {
-    const headerScrolled = () => {
-      if (window.scrollY > 100) {
-        selectHeader.classList.add("header-scrolled");
-      } else {
-        selectHeader.classList.remove("header-scrolled");
-      }
-    };
-    window.addEventListener("load", headerScrolled);
-    onscroll(document, headerScrolled);
-  }
-
-  /**
-   * `Back` to top button
+   * tạo sự kiện cho nút back to top
    */
   let backtotop = select(".back-to-top");
   if (backtotop) {
@@ -132,44 +150,14 @@
   );
 
   /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
-  on(
-    "click",
-    ".scrollto",
-    function (e) {
-      if (select(this.hash)) {
-        e.preventDefault();
-
-        let navbar = select("#navbar");
-        if (navbar.classList.contains("navbar-mobile")) {
-          navbar.classList.remove("navbar-mobile");
-          let navbarToggle = select(".mobile-nav-toggle");
-          navbarToggle.classList.toggle("bi-list");
-          navbarToggle.classList.toggle("bi-x");
-        }
-        scrollto(this.hash);
-      }
-    },
-    true
-  );
-
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
-  window.addEventListener("load", () => {
-    if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash);
-      }
-    }
-  });
-
-  /**
    * Initiate glightbox
    */
   const glightbox = GLightbox({
     selector: ".glightbox",
+  });
+
+  const portfolioLightbox = GLightbox({
+    selector: ".portfolio-lightbox",
   });
 
   /**
@@ -203,13 +191,39 @@
     }
   });
 
+  /**
+   * Hàm thiết lập các thông tin của công ty
+   * @returns
+   */
+  const setCompanyInfo = async () => {
+    let info = await getRequest("companyInfo.php");
 
+    if (!info) {
+      return;
+    }
 
+    let companyAddress = select(".company-address", true);
+    let companyEmail = select(".company-email", true);
+    let companyPhoneNumber = select(".company-phone-address", true);
 
+    if (companyAddress) {
+      companyAddress.forEach((e) => {
+        e.innerHTML = info.DiaChi;
+      });
+    }
 
+    if (companyEmail) {
+      companyEmail.forEach((e) => {
+        e.innerHTML = info.Email;
+      });
+    }
 
-  
+    if (companyPhoneNumber) {
+      companyPhoneNumber.forEach((e) => {
+        e.innerHTML = info.SoDienThoai;
+      });
+    }
+  };
 
-
-  
+  setCompanyInfo();
 })();

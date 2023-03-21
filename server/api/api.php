@@ -47,6 +47,11 @@ function api_query($query){
     }
 }
 
+function api_get_db_last_id(){
+    global $connection;
+    return mysqli_insert_id($connection);
+}
+
 $connection = getConnection();
 api_checking_connection($connection);
 

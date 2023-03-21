@@ -6,7 +6,13 @@ require_once __DIR__ . "/common.php";
 function invokeMethodOption()
 {
     $method = $_SERVER["REQUEST_METHOD"];
+    validate();
     switch ($method) {
+        case  "GET":
+        {
+            getAdmins();
+            break;
+        }
         case "POST":
         {
             addNewAdmin();
@@ -27,6 +33,12 @@ function invokeMethodOption()
             api_error_response("Phương thức không xác định!", false);
         }
     }
+}
+
+function getAdmins()
+{
+    $query = "SELECT MaTaiKhoan, Email, NgayTao FROM QuanTriVien";
+    itemsListResponse(api_query($query));
 }
 
 function changeAdminPassword()
@@ -57,17 +69,13 @@ function changeAdminPassword()
 
 function addNewAdmin()
 {
-        paramsCheck($_POST, 'email', 'password');
-        $email = $_POST["email"];
-        $password = $_POST["password"];
+    paramsCheck($_POST, 'email', 'password');
+    $email = $_POST["email"];
+    $password = $_POST["password"];
 
-        $query = "INSERT INTO QuanTriVien(MatKhau, Email, NgayTao) VALUES (SHA1('$password'),'$email',NOW())";
+    $query = "INSERT INTO QuanTriVien(MatKhau, Email, NgayTao) VALUES (SHA1('$password'),'$email',NOW())";
 
-        if (api_query($query)) {
-            api_success_response("Thêm thành công!", true);
-        } else {
-            api_error_response("Thêm thất bại!", false);
-        }
+    insertResponse(api_query($query));
 
 
 }
@@ -87,8 +95,6 @@ function addNewAdmin()
  */
 function deleteAdminAccountById()
 {
-
-
     paramsCheck($_GET, 'id');
     $id = $_GET['id'];
     if ($id == '1') {
@@ -103,11 +109,7 @@ function deleteAdminAccountById()
 
     $query = "DELETE FROM QuanTriVien WHERE MaTaiKhoan = '$id'";
 
-    if (api_query($query)) {
-        api_success_response("Xóa thành công!", true);
-    } else {
-        api_success_response("Xóa thất bại!", false);
-    }
+    deleteResponse(api_query($query));
 }
 
 /**
@@ -116,7 +118,6 @@ function deleteAdminAccountById()
  */
 function init()
 {
-    validate();
     invokeMethodOption();
 }
 

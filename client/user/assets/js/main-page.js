@@ -2,12 +2,6 @@
   "use strict";
 
   // khởi tạo card sản phẩm tiêu biểu
-
-  const portfolioLightbox = GLightbox({
-    selector: ".portfolio-lightbox",
-  });
-
-
   new Swiper(".portfolio-details-slider", {
     speed: 400,
     loop: true,
@@ -48,7 +42,5 @@
       },
     },
   });
-
-
-
+  
 })();

@@ -68,54 +68,56 @@
                             <div class="address">
                                 <i class="bi bi-geo-alt"></i>
                                 <h4>Địa chỉ:</h4>
-                                <p>12/5 Ấp Đông Lân, Xã Bà Điểm, Huyện Hóc Môn </p>
+                                <p><span class="company-address"></span></p>
                             </div>
 
                             <div class="email">
                                 <i class="bi bi-envelope"></i>
                                 <h4>Email:</h4>
-                                <p>tantv0306@gmail.com</p>
+                                <p><span class="company-email"></span></p>
                             </div>
 
                             <div class="phone">
                                 <i class="bi bi-phone"></i>
                                 <h4>Liên hệ:</h4>
-                                <p>+84 366548549</p>
+                                <p><span class="company-phone-address"></span></p>
                             </div>
+                            <img src="assets/img/team/logo.jpg" class="img-fluid rounded-5" alt="" srcset="">
                         </div>
 
                     </div>
 
                     <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <form method="" role="form" class="php-email-form">
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Họ và tên </label>
-                                    <input type="text" name="name" class="form-control" id="name" required>
+                                    <input type="text" name="name" class="form-control" id="contact-fullname" required>
                                 </div>
                                 <div class="form-group col-md-6 mt-3 mt-md-0">
                                     <label for="name">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" required>
+                                    <input type="email" class="form-control" name="email" id="contact-email" required>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="name">Số điện thoại</label>
-                                <input type="text" class="form-control" name="subject" id="subject" required>
+                                <input type="text" class="form-control" name="subject" id="contact-phone-number" required>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="name">Tiêu đề</label>
-                                <input type="text" class="form-control" name="subject" id="subject" required>
+                                <input type="text" class="form-control" name="subject" id="contact-title" required>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="name">Lời nhắn</label>
-                                <textarea class="form-control" name="message" rows="10" required></textarea>
+                                <textarea class="form-control" name="message" rows="10" id="contact-content" required></textarea>
                             </div>
-                            <div class="my-3">
-                                <div class="loading">Đang tải</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Cảm ơn bạn liên hệ! </div>
+
+                            <div class="contact-alert">
+
+                                
                             </div>
-                            <div class="text-center"><button type="submit">Gửi liên hệ</button></div>
+
+                            <div class="text-center"><button id="contact-btn-send" type="submit">Gửi liên hệ</button></div>
                         </form>
                     </div>
 
@@ -137,9 +139,9 @@
                     <div class="col-lg-6">
                         <h3>Tiānxià Wǔjué Organic</h3>
                         <span>Mang đến cho bạn vị ngọt thiên nhiên từ 5 con báo 🐆🐆🐆🐆🐆</span>
-                        <p><i class="bi bi-geo-alt"></i>Địa chỉ: 12/5 Ấp Đông Lân, Xã Bà Điểm, Huyện Hóc Môn </p>
-                        <p><i class="bi bi-envelope"></i>Email: tantv0306@gmail.com</p>
-                        <p><i class="bi bi-phone"></i>Số điện thoại: +84 366548549</p>
+                        <p><i class="bi bi-geo-alt"></i>Địa chỉ: <span class="company-address"></span> </p>
+                        <p><i class="bi bi-envelope"></i>Email: <span class="company-email"></span></p>
+                        <p><i class="bi bi-phone"></i>Số điện thoại: <span class="company-phone-address"></span></p>
 
                     </div>
                 </div>
@@ -157,13 +159,14 @@
 
         <div class="container footer-bottom clearfix">
             <div class="copyright">
-                &copy; Copyright <strong><span>Tiānxià Wǔjué Corporation</span></strong>. All Rights Reserved
+                &copy; Copyright <strong><a href="./login.html"><span>Tiānxià Wǔjué Corporation</span></a></strong>. All Rights Reserved
             </div>
             <div class="credits">
             </div>
         </div>
 
     </footer>
+    
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

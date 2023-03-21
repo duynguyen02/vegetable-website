@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/api/api.php";
 require_once __DIR__ . "/session/session.php";
 
 /**
@@ -26,4 +27,12 @@ function validate()
 function getCurrentEmailSession(){
     validate();
     return getSession();
+}
+
+/**
+ * @return bool
+ */
+function isValidSession(): bool
+{
+    return isAvailableSession();
 }

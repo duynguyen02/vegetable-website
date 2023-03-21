@@ -1,3 +1,7 @@
+# Các mẫu truy vấn sử dụng
+# trong quá trình phát triển API
+# Vui lòng không thực thi vào CSDL
+
 ### khach hang ###
 SELECT *
 FROM vegetable_showroom.KhachHang;
@@ -19,7 +23,8 @@ WHERE MaLienHe = 1;
 
 ### loai thuc pham ###
 
-SELECT * FROM LoaiThucPham;
+SELECT *
+FROM LoaiThucPham;
 
 INSERT INTO vegetable_showroom.LoaiThucPham (LoaiThucPham, NgayTao)
 VALUES ('Rau', NOW());
@@ -34,7 +39,8 @@ WHERE MaLoaiThucPham = 1;
 
 
 ### noi san xuat ###
-SELECT * FROM NoiSanXuat;
+SELECT *
+FROM NoiSanXuat;
 
 INSERT INTO vegetable_showroom.NoiSanXuat (CongTySanXuat, DiaChi, NgayTao)
 VALUES ('Tan Ngoc Group', 'TP. HCM', NOW());
@@ -80,5 +86,10 @@ SET t.ThucPham       = 'vq',
     t.MaLoaiThucPham = 2
 WHERE t.MaThucPham = 1;
 
-INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email) VALUES (45, 'hihi', '03215485', 'er@gmail.com');
+INSERT INTO KhachHang (MaKhachHang, HoVaTen, SoDienThoai, Email)
+VALUES (45, 'hihi', '03215485', 'er@gmail.com');
 
+SELECT KhachHang.MaKhachHang, KhachHang.hovaten, KhachHang.sodienthoai, KhachHang.email,
+    LienHe.TieuDe, LienHe.NoiDung, LienHe.NgayLienHe
+FROM KhachHang
+         INNER JOIN LienHe on KhachHang.MaKhachHang = LienHe.MaKhachHang;
