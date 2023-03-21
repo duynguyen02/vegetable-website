@@ -14,14 +14,14 @@ CREATE TABLE NoiSanXuat
     CongTySanXuat VARCHAR (255) NOT NULL,
     DiaChi        VARCHAR (255) NOT NULL,
     NgayTao       DATETIME     NOT NULL,
-    PRIMARY KEY MaNoiSanXuat
+    PRIMARY KEY (MaNoiSanXuat)
 );
 CREATE TABLE LoaiThucPham
 (
     MaLoaiThucPham INT AUTO_INCREMENT,
     LoaiThucPham   VARCHAR (255) NOT NULL,
     NgayTao        DATETIME     NOT NULL,
-    PRIMARY KEY MaLoaiThucPham
+    PRIMARY KEY (MaLoaiThucPham)
 );
 
 CREATE TABLE ThucPham
@@ -92,7 +92,7 @@ VALUES (SHA1('123456'),
         'admin@admin.com',
         NOW());
 
-INSERT INTO ThongTinCongTy('lock', 'TenCongTy', 'Email', 'SoDienThoai', 'DiaChi', 'NgayTao')
+INSERT INTO ThongTinCongTy('lock', TenCongTy, Email, SoDienThoai, DiaChi, NgayTao)
 VALUES ('X',
         'Tiānxià Wǔjué Corporation',
         'tianxiawujue@admin.com',
