@@ -94,6 +94,24 @@ const putRequest = async (url, body) => {
 };
 
 /**
+ *
+ */
+const deleteRequest = async (url) => {
+  try {
+    let res = await fetch(server_url + url, {
+      method: "DELETE",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
  * 
  * @param {*} email 
  * @returns 

@@ -2,6 +2,24 @@
 (function () {
     "use strict";
 
+    const deleteContact = async (item) => {
+        if (confirm("Bạn có muốn xóa tin nhắn?")) {
+                            
+            let id = item.MaLienHe
+
+            let res = await deleteRequest(`contact.php?method=message&id=${id}`)
+
+            if (res.status == true){
+                select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
+                select(`#contact-${item.MaLienHe}`).remove();
+            }
+            else{
+                select('#dashboard-sub-notification').innerHTML = res.message
+            }
+            select(`#dashboard-modal-exit`).click();
+        }
+    } 
+
     new Dashboard()
         .setUrl("contact.php")
         .addButton(contactButton)
@@ -60,11 +78,7 @@
                 })
                 .setCustomEvent((item) => {
                     select("#dashboard-delete-message").addEventListener("click", (e) => {
-                        if (confirm("Bạn có muốn xóa tin nhắn?")) {
-                            // TODO: request xóa thư
-                            select(`#contact-${item.MaLienHe}`).remove();
-                            select(`#dashboard-modal-exit`).click();
-                        }
+                        deleteContact(item)
                     });
                 })
                 .build()

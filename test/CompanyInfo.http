@@ -5,4 +5,4 @@ GET http://localhost/vegetable-website/server/companyInfo.php
 PUT http://localhost/vegetable-website/server/companyInfo.php
 Content-Type: application/x-www-form-urlencoded
 
-company_name=Máy dập Hóc Môn Corparation&email=tantv0306@gmail.com&phone_number=+84 366548549&address=12/5 Ấp Đông Lân, Xã Bà Điểm, Huyện Hóc Môn
+company_name=THIÊN HẠ NGŨ TUYỆT Corparation&email=tantv0306@gmail.com&phone_number=+84 366548549&address=12/5 Ấp Đông Lân, Xã Bà Điểm, Huyện Hóc Môn
