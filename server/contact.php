@@ -46,7 +46,7 @@ function deleteContact()
 {
     paramsCheck($_GET,
         'method',
-        'id',
+        'id'
     );
 
     switch ($_GET['method']) {
