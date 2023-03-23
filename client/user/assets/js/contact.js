@@ -9,11 +9,7 @@
     let customerContent = select("#contact-content").value.trim();
 
     if (
-      !customerName ||
-      !customerEmail ||
-      !customerPhoneNumber ||
-      !customerTitle ||
-      !customerContent
+      !customerName || !customerEmail || !customerPhoneNumber || !customerTitle || !customerContent
     ) {
       alert("Vui lòng nhập đầy đủ thông tin!");
       return;
@@ -32,11 +28,8 @@
     }
 
     let res = await postRequest("contact.php", {
-      customer_name: customerName,
-      phone_number: customerPhoneNumber,
-      email: customerEmail,
-      title: customerTitle,
-      content: customerContent,
+      customer_name: customerName, phone_number: customerPhoneNumber,
+      email: customerEmail, title: customerTitle, content: customerContent,
     });
 
     sendButton.disabled = false;
