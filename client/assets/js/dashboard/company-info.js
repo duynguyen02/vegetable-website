@@ -3,7 +3,7 @@
 
     const editCompanyInfo = async (body, item) => {
         let res = await putRequest('companyInfo.php', body)
-        console.log(res);
+        
         if (res.status == true){
             select('#dashboard-sub-notification').innerHTML = "Sửa thành công!"
             select(`#company-${item.SoDienThoai}`).innerHTML = `
