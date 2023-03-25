@@ -56,13 +56,14 @@ function deleteProductType()
 
 function editProductType()
 {
+    parse_str(file_get_contents('php://input'), $_PUT);
     paramsCheck(
-        $_POST,
+        $_PUT,
         'id', 'product_type'
     );
 
-    $id = $_POST['id'];
-    $productType = $_POST['product_type'];
+    $id = $_PUT['id'];
+    $productType = $_PUT['product_type'];
 
     $query = "
     UPDATE LoaiThucPham 

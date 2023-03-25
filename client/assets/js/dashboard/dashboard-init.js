@@ -16,6 +16,10 @@ let changePasswordNotification = select("#dashboard-password-change-message");
 let tableData = select("#dashboard-table-data");
 // nút tiến hành đổi mật khẩu
 let changePasswordSubmitButton = select("#dashboard-btn-change-password");
+// thông báo nhỏ
+let subNotification = select("#dashboard-sub-notification")
+// vùng đầu bảng dữ liệu
+let tableTool = select("#dashboard-table-tool")
 
 /**
  * Hàm gán spinner cho thanh thông báo
@@ -48,4 +52,14 @@ const setNotificationWithCannotLoadData = () => {
     );
 };
 
+/**
+ * 
+ * @param {*} msg 
+ */
+const setSubNotification = (msg) => {
+    subNotification.innerHTML = msg
+}
 
+const setTableTool = (s) => {
+    tableTool.innerHTML = s
+}

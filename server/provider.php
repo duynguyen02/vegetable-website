@@ -56,14 +56,15 @@ function deleteProvider()
 
 function editProvider()
 {
+    parse_str(file_get_contents('php://input'), $_PUT);
     paramsCheck(
-        $_POST,
+        $_PUT,
         'id', 'provider_name', 'address'
     );
 
-    $id = $_POST['id'];
-    $providerName = $_POST['provider_name'];
-    $address = $_POST['address'];
+    $id = $_PUT['id'];
+    $providerName = $_PUT['provider_name'];
+    $address = $_PUT['address'];
 
     $query = "
     UPDATE NoiSanXuat

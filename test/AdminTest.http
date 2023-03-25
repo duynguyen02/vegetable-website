@@ -2,7 +2,7 @@
 POST http://localhost/vegetable-website/server/login.php
 Content-Type: application/x-www-form-urlencoded
 
-email=admin@admin.com&password=123456
+email=admin@admin.com&password=456789
 
 ###
 
@@ -13,3 +13,22 @@ GET http://localhost/vegetable-website/server/logout.php
 
 
 GET http://localhost/vegetable-website/server/admin.php
+
+###
+
+GET http://localhost/vegetable-website/server/sessionCheck.php
+
+### 
+POST http://localhost/vegetable-website/server/admin.php
+Content-Type: application/x-www-form-urlencoded
+
+email=admin2@admin2.com&password=123456
+
+### 
+PUT http://localhost/vegetable-website/server/admin.php
+Content-Type: application/x-www-form-urlencoded
+
+new_password=456789&current_password=123456
+
+###
+DELETE http://localhost/vegetable-website/server/admin.php?id=2

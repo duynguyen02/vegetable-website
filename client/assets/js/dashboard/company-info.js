@@ -128,6 +128,7 @@
         .setOnError(setNotificationWithCannotLoadData)
         .setOnComplete(() => {
             setNotificationWith("THÔNG TIN CÔNG TY");
+            setTableTool('')
         })
         .build();
 })();

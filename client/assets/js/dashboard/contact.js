@@ -2,16 +2,16 @@
 (function () {
     "use strict";
 
-    const deleteAdmin = async (item) => {
-        if (confirm("Bạn có muốn xóa quản trị viên?")) {
+    const deleteContact = async (item) => {
+        if (confirm("Bạn có muốn xóa tin nhắn?")) {
                             
-            let id = item.MaTaiKhoan
+            let id = item.MaLienHe
 
-            let res = await deleteRequest(`admin.php?id=${id}`)
+            let res = await deleteRequest(`contact.php?method=message&id=${id}`)
 
             if (res.status == true){
                 select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
-                select(`#admin-${item.MaTaiKhoan}`).remove();
+                select(`#contact-${item.MaLienHe}`).remove();
             }
             else{
                 select('#dashboard-sub-notification').innerHTML = res.message
@@ -21,53 +21,64 @@
     } 
 
     new Dashboard()
-        .setUrl("admin.php")
-        .addButton(adminButton)
+        .setUrl("contact.php")
+        .addButton(contactButton)
         .setTableHeader(
             `
              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Email</th>
-                <th scope="col">Ngày Tạo</th>
-             </tr>
+                  <th scope="col">Mã thư</th>
+                  <th scope="col">Họ và tên</th>
+                  <th scope="col">SĐT</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Tiêu đề</th>
+                  <th scope="col">Ngày liên hệ</th>
+            </tr>
             `
         )
         .setOnEachItems((item) => {
             return `
-            <tr id="admin-${item.MaTaiKhoan}" >
-                <th scope="row">${item.MaTaiKhoan}</th>
-                <td>${item.Email}</td>
-                <td>${item.NgayTao}</td>
+            <tr id="contact-${item.MaLienHe}">
+              <th scope="row">${item.MaLienHe}</th>
+              <td>${item.hovaten}</td>
+              <td>${item.sodienthoai}</td>
+              <td>${item.email}</td>
+              <td>${item.TieuDe}</td>
+              <td>${item.NgayLienHe}</td>
             </tr>
           `;
         })
         .setOnEachItemsClickEvent((item) => {
             new ItemInfoDialog()
                 .setItem(item)
-                .setItemElement(select(`#admin-${item.MaTaiKhoan}`))
+                .setItemElement(select(`#contact-${item.MaLienHe}`))
                 .setModalButton(select("#dashboard-modal"))
                 .setHeaderModal(select("#dashboard-header-modal"))
                 .setHeaderModalHTML((item) => {
                     return `
-                        <h5>Thông tin quản trị viên</h5>
+                        <h5>${item.TieuDe}</h5>
                     `
                 })
                 .setBodyModal(select("#dashboard-body-modal"))
                 .setBodyModalHTML((item) => {
                     return `
-                    <span>Email: ${item.Email}</span> <br>
+                            <span>Họ và tên: ${item.hovaten}</span> <br>
+                            <span>Số điện thoại: ${item.sodienthoai}</span> <br>
+                            <span>Email: ${item.email}</span> <br>
+                            <span>Ngày liên hệ: ${item.NgayLienHe}</span> <br>
+                            <span>------------------------------------</span> <br>
+                            <span>${item.NoiDung}</span>
                     `
                 })
                 .setFooterModal(select("#dashboard-footer-modal"))
                 .setFooterModalHTML((item) => {
                     return `
-                    <button id="dashboard-delete-message" type="button" class="btn btn-success">Xóa Quản trị viên</button>
+                        <button id="dashboard-delete-message" type="button" class="btn btn-success">Xóa Thư</button>
                         <button id="dashboard-modal-exit" type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>
                     `
                 })
                 .setCustomEvent((item) => {
                     select("#dashboard-delete-message").addEventListener("click", (e) => {
-                        deleteAdmin(item)
+                        deleteContact(item)
                     });
                 })
                 .build()
@@ -77,7 +88,8 @@
         .setOnPrepare(setLoading)
         .setOnError(setNotificationWithCannotLoadData)
         .setOnComplete(() => {
-            setNotificationWith("QUẢN TRỊ VIÊN")
+            setNotificationWith("LIÊN HỆ")
+            setTableTool('')
         })
         .build()
 

@@ -62,7 +62,7 @@ class ItemInfoDialog {
 
 
     build() {
-        if (this.item === undefined ||
+        if (
             this.itemElement === undefined ||
             this.btnModal === undefined ||
             this.headerModal === undefined ||
@@ -162,6 +162,7 @@ class Dashboard {
         return this
     }
 
+
     async _render() {
         if (this.onPrepare !== undefined) {
             this.onPrepare()
@@ -208,8 +209,10 @@ class Dashboard {
         this.tableDataElement.insertAdjacentHTML("beforeend", `</tbody>`);
 
         if (this.onComplete !== undefined) {
-            this.onComplete();
+            this.onComplete(this);
         }
+
+
 
     }
 

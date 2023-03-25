@@ -1,0 +1,23 @@
+GET http://localhost/vegetable-website/server/productType.php
+
+###
+
+POST http://localhost/vegetable-website/server/productType.php 
+Content-Type: application/x-www-form-urlencoded
+
+product_type=Hạt
+
+### 
+POST http://localhost/vegetable-website/server/productType.php 
+Content-Type: application/x-www-form-urlencoded
+
+product_type=Hạt
+
+### 
+PUT http://localhost/vegetable-website/server/productType.php 
+Content-Type: application/x-www-form-urlencoded
+
+product_type=Hạt&id=4
+
+### 
+DELETE  http://localhost/vegetable-website/server/productType.php?id=4
