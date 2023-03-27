@@ -93,3 +93,9 @@ SELECT KhachHang.MaKhachHang, KhachHang.hovaten, KhachHang.sodienthoai, KhachHan
     LienHe.TieuDe, LienHe.NoiDung, LienHe.NgayLienHe
 FROM KhachHang
          INNER JOIN LienHe on KhachHang.MaKhachHang = LienHe.MaKhachHang;
+
+
+SELECT ThucPham.MaThucPham, ThucPham.ThucPham, ThucPham.MauSac, ThucPham.KichThuoc, ThucPham.HinhDang, ThucPham.ViTriHinhAnh, ThucPham.NgayTao, noisanxuat.CongTySanXuat, noisanxuat.DiaChi, loaithucpham.LoaiThucPham
+FROM ThucPham
+INNER JOIN noisanxuat  ON noisanxuat.MaNoiSanXuat = ThucPham.MaNoiSanXuat
+INNER JOIN loaithucpham ON loaithucpham.MaLoaiThucPham = ThucPham.MaLoaiThucPham;
