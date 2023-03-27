@@ -1,6 +1,6 @@
 // các nút trên header
 let logoutButton = select("#dashboard-a-logout");
-let contactButton = select("#dashboard-a-contact");
+// let contactButton = select("#dashboard-a-contact");
 let companyButton = select("#dashboard-a-company-info");
 let adminButton = select("#dashboard-a-admin");
 let productButton = select("#dashboard-a-product");
@@ -20,6 +20,13 @@ let changePasswordSubmitButton = select("#dashboard-btn-change-password");
 let subNotification = select("#dashboard-sub-notification")
 // vùng đầu bảng dữ liệu
 let tableTool = select("#dashboard-table-tool")
+
+
+
+let btnModal = select("#dashboard-modal")
+let modalHeader = select("#dashboard-header-modal")
+let modalBody = select("#dashboard-body-modal")
+let modalFooter = select("#dashboard-footer-modal")
 
 /**
  * Hàm gán spinner cho thanh thông báo
