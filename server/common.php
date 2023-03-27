@@ -63,7 +63,7 @@ function itemsListResponse($queryResult){
         api_response($itemsList, 200);
     }
     else{
-        api_error_response("Không xác định!", 404);
+        api_error_response("Không xác định!", false);
     }
 }
 
