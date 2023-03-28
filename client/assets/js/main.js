@@ -74,6 +74,26 @@ const postRequest = async (url, body) => {
   }
 };
 
+const postRequestWithFormData = async (url, body) => {
+  try {
+    let res = await fetch(server_url + url, {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: body,
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+
 /**
  *
  */

@@ -3,18 +3,38 @@
 
     const productButton = select("#dashboard-a-product");
 
+    productButton.addEventListener('click', (e) => {
+        e.preventDefault()
+        getProductTypes()
+        getProviders()
+        renderDashboard()
+    })
+
     let productTypes = ``
     const getProductTypes = async () => {
         productTypes = ``
         let res = await getRequest('productType.php')
-        if (res.status === true){
+        if (res.status === true) {
             res.items.forEach((item) => {
                 productTypes += `<option value="${item.MaLoaiThucPham}">${item.LoaiThucPham}</option>`
             })
         }
     }
 
-    const productDialog = new Dialog() 
+    let providers = ``
+    const getProviders = async () => {
+        providers = ``
+        let res = await getRequest('provider.php')
+        if (res.status === true) {
+            res.items.forEach((item) => {
+                providers += `<option value="${item.MaNoiSanXuat}">${item.CongTySanXuat}</option>`
+            })
+        }
+    }
+
+
+    // hộp thoại chỉnh sửa
+    const productDialog = new Dialog()
         .setModalButton(btnModal)
         .setHeaderModal(modalHeader)
         .setBodyModal(modalBody)
@@ -44,26 +64,27 @@
             <input value="${item === undefined ? "" : item.HinhDang}" type="text" class="form-control" id="dashboard-product-shape">
             </div>
             <div class="mb-3">
-            <label for="dashboard-product-day" class="form-label">Ngày Tạo</label>
-            <input value="${item === undefined ? "" : item.NgayTao}" type="text" class="form-control" id="dashboard-product-day">
+            <label for="dashboard-product-desc" class="form-label">Mô tả</label>
+            <textarea class="form-control" name="message" rows="5" id="dashboard-product-desc" required="">${item === undefined ? "" : item.MoTa}</textarea>
             </div>
             <div class="mb-3">
-            <label for="formFileSm" class="form-label">Hình Ảnh</label>
-            ${item === undefined ? "" : `<a href="${`${server_url}${item.ViTriHinhAnh}`}" target="_blank" >Xem Ảnh</a>`}
-            <input class="form-control form-control-sm" id="formFileSm" type="file">
+            <label for="dashboard-product-img" class="form-label">Hình Ảnh</label>
+            ${item === undefined ? "" : `<a  href="${`${server_url}${item.ViTriHinhAnh}`}" target="_blank" >Xem Ảnh <span id="dashboard-product-img-location"  hidden>${item === undefined ? "" : item.ViTriHinhAnh}</span></a>`}
+            <input class="form-control form-control-sm" id="dashboard-product-img" type="file">
             </div>
             <div class="mb-3">
             <label for="" class="form-label">Loại Thực Phẩm</label>
-            <select class="form-select">
+            <select id="product-type-select" class="form-select">
             ${productTypes}
             </select>
             </div>
             <div class="mb-3">
             <label for="" class="form-label">Nguồn Cung</label>
-            <select class="form-select">
-            ${""}
+            <select id="provider-select" class="form-select">
+            ${providers}
             </select>
             </div>
+            <div class="mb-3" id="add-admin-notification">            
            
         </form>
             
@@ -77,57 +98,179 @@
                     `
         })
         .setCustomEvent((item) => {
+
+            const editProduct = async () => {
+                let productName = select("#dashboard-product-name").value.trim()
+                let color = select("#dashboard-product-color").value.trim()
+                let size = select("#dashboard-product-size").value.trim()
+                let shape = select("#dashboard-product-shape").value.trim()
+                let desc = select("#dashboard-product-desc").value.trim()
+                let img = undefined
+                try{
+                    img = select("#dashboard-product-img").files[0]
+                }
+                catch(err){
+                    img = undefined
+                }
+                
+                let productTypeId = select("#product-type-select").value
+                let providerId = select("#provider-select").value
+                let imageLocation = select("#dashboard-product-img-location").innerHTML
+
+
+                if (
+                    !productName ||
+                    !color ||
+                    !size ||
+                    !shape ||
+                    !productTypeId ||
+                    !providerId ||
+                    !desc
+                ) {
+                    select("#add-admin-notification").innerHTML = "Vui lòng nhập giá trị hợp lệ!"
+                    return
+                }
+
+                var data = new FormData()
+                data.append('id', item.MaThucPham)
+                data.append('product', productName)
+                data.append('color', color)
+                data.append('size', size)
+                data.append('shape', shape)
+                data.append('desc', desc)
+                data.append('provider_id', providerId)
+                data.append('product_type_id', productTypeId)
+
+                
+                if (img == undefined){
+                    data.append('is_change_image', imageLocation)
+                }
+                else{
+                    console.log("nay nè");
+                    data.append('is_change_image', "")
+                    data.append('image', img)
+                }
+
+
+
+                let res = await postRequestWithFormData('product.php?method=edit', data)
+
+                if (res.status == true) {
+                    select('#dashboard-sub-notification').innerHTML = res.message
+                    renderDashboard()
+
+                }
+                else {
+                    select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
+                }
+                select(`#dashboard-modal-exit`).click();
+            }
+
+
             select("#dashboard-modal-save").addEventListener('click', (e) => {
                 e.preventDefault()
-                // TODO                
+                
+                editProduct()
+
+
             })
 
             select("#dashboard-modal-delete").addEventListener("click", (e) => {
                 e.preventDefault()
-                // TODO
+
+                const deleteProduct = async () => {
+                    if (confirm("Bạn có muốn xóa tin nhắn?")) {
+
+                        let id = item.MaThucPham
+
+                        let res = await deleteRequest(`product.php?id=${id}`)
+
+                        if (res.status == true) {
+                            select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
+                            select(`#product-${item.MaThucPham}`).remove();
+                        }
+                        else {
+                            select('#dashboard-sub-notification').innerHTML = res.message
+                        }
+                        select(`#dashboard-modal-exit`).click();
+                    }
+                }
+
+                deleteProduct()
+
             });
         })
 
 
+    // hộp thoại thêm
     const productAddDialog = Object.assign(Object.create(Object.getPrototypeOf(productDialog)), productDialog)
     productAddDialog
-    .setFooterModalHTML((item) => {
-        return `
+        .setFooterModalHTML((item) => {
+            return `
         <button id="dashboard-add-new-product-type" type="button" class="btn btn-success">Thêm</button>
         <button id="dashboard-modal-exit" type="button" class="btn btn-danger" data-bs-dismiss="modal">Thoát</button>  
                 `
-    })
-    .setCustomEvent((item) => {
+        })
+        .setCustomEvent((item) => {
 
-        const addNewProductType = async () => {
-            let productType = select("#dashboard-product-type-name").value.trim()
+            const addProduct = async () => {
+                let productName = select("#dashboard-product-name").value.trim()
+                let color = select("#dashboard-product-color").value.trim()
+                let size = select("#dashboard-product-size").value.trim()
+                let shape = select("#dashboard-product-shape").value.trim()
+                let desc = select("#dashboard-product-desc").value.trim()
+                let img = undefined
+                try {
+                    img = select("#dashboard-product-img").files[0]
+                } catch (error) {
+                    img = undefined
+                }
+                let productTypeId = select("#product-type-select").value
+                let providerId = select("#provider-select").value
 
-            if (!productType) {
-                select("#add-admin-notification").innerHTML = "Vui lòng nhập giá trị hợp lệ!"
-                return
+
+                if (
+                    !productName ||
+                    !color ||
+                    !size ||
+                    !shape ||
+                    img == undefined ||
+                    !productTypeId ||
+                    !providerId ||
+                    !desc
+                ) {
+                    select("#add-admin-notification").innerHTML = "Vui lòng nhập giá trị hợp lệ!"
+                    return
+                }
+
+                var data = new FormData()
+                data.append('product', productName)
+                data.append('color', color)
+                data.append('size', size)
+                data.append('shape', shape)
+                data.append('desc', shape)
+                data.append('provider_id', providerId)
+                data.append('product_type_id', productTypeId)
+                data.append('image', img)
+
+                let res = await postRequestWithFormData('product.php?method=add', data)
+
+                if (res.status == true) {
+                    select('#dashboard-sub-notification').innerHTML = res.message
+                    renderDashboard()
+
+                }
+                else {
+                    select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
+                }
+                select(`#dashboard-modal-exit`).click();
             }
 
-            let res = await postRequest('productType.php', {
-                product_type: productType
-            })
+            select("#dashboard-add-new-product-type").addEventListener("click", (e) => {
+                addProduct()
+            });
 
-            if (res.status == true) {
-                select('#dashboard-sub-notification').innerHTML = res.message
-                renderDashboard()
-
-            }
-            else {
-                select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
-            }
-            select(`#dashboard-modal-exit`).click();
-
-        }
-        
-        select("#dashboard-add-new-product-type").addEventListener("click", (e) => {
-            addNewProductType()
-        });
-
-    })
+        })
 
 
 
@@ -167,13 +310,15 @@
             `
         }))
         .setOnIemEventListener((item) => {
-            getProductTypes()
 
             let itemButton = select(`#product-${item.MaThucPham}`);
 
             itemButton.addEventListener('click', (e) => {
                 e.preventDefault()
                 productDialog.render(item)
+                select("#product-type-select").value = item.MaLoaiThucPham
+                select("#provider-select").value = item.MaNoiSanXuat
+
             })
 
         })
@@ -182,7 +327,7 @@
             `
             <div class="input-group">
                 <div class="form-outline">
-                    <input placeholder type="search" id="product-type-search" class="form-control" />
+                    <input placeholder type="search" id="product-search" class="form-control" />
                 </div>
 
                 <button type="button" id="provider-add-btn" class="mx-1 btn btn-light"><i class='bx bx-plus-circle'></i></button>
@@ -191,12 +336,12 @@
             `
         )
         .setOnCustomTableDataEvent((dashboard, items) => {
-            let contactSearch = select("#product-type-search")
+            let contactSearch = select("#product-search")
             contactSearch.addEventListener('input', (e) => {
                 let tempItems = items.filter((item) => {
                     let value = contactSearch.value
                     return (
-                        item.LoaiThucPham.includes(value)
+                        item.ThucPham.includes(value) || item.MauSac.includes(value) || item.LoaiThucPham.includes(value)
                     )
                 })
                 dashboard.tableRender(tempItems)
@@ -221,19 +366,16 @@
 
         if (res.status == true) {
             productDashboard.render(res.items)
+            setNotificationWith("SẢN PHẨM")
         }
         else {
             setNotificationWithCannotLoadData()
         }
 
-        setNotificationWith("NHÀ CUNG CẤP")
 
     }
 
-    productButton.addEventListener('click', (e) => {
-        e.preventDefault()
-        renderDashboard()
-    })
+
 
 
 })()
