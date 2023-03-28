@@ -14,22 +14,153 @@ function invokeMethodOption()
 
     validate();
     switch ($method) {
-        case "POST": {
+        case "POST":
+        {
+            paramsCheck(
+                $_GET,
+                'method'
+            );
+
+            if ($_GET['method'] == 'add') {
                 addProduct();
-                break;
             }
-        case "PUT": {
 
-                break;
+            else if ($_GET['method'] == 'edit') {
+                editProduct();
             }
-        case "DELETE": {
-
-                break;
-            }
-        default: {
+            else{
                 api_error_response("Phương thức không xác định!", false);
             }
+            break;
+        }
+        case "DELETE":
+        {
+            deleteProduct();
+            break;
+        }
+        default:
+        {
+            api_error_response("Phương thức không xác định!", false);
+        }
     }
+}
+
+function uploadImage(): ?string
+{
+    // kiểm tra ảnh có hợp lệ hay không
+
+    // kiểm tra ảnh có phải giả
+    $fakeImageCheck = getimagesize($_FILES["image"]["tmp_name"]);
+
+    // kiểm tra đuôi ảnh có hợp lệ
+    // lấy đuôi ảnh
+    $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+    $fileExtensionCheck = true;
+    if (
+        $fileExtension != "jpg" && $fileExtension != "jpeg"
+    ) {
+        $fileExtensionCheck = false;
+    }
+
+
+    if ($fakeImageCheck === false || $fileExtensionCheck === false) {
+        return null;
+    }
+
+    // biến vị trí lưu ảnh
+    $targetDir = "uploads/";
+
+
+    // tạo 1 đường dẫn không tồn tại
+    while ($uploadTarget = $targetDir . generateRandomString() . "." . $fileExtension) {
+        if (!file_exists($uploadTarget)) {
+            break;
+        }
+    }
+
+    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $uploadTarget)) {
+        return null;
+    }
+
+    return $uploadTarget;
+
+}
+
+function editProduct()
+{
+
+
+
+    paramsCheck(
+        $_POST,
+        'id',
+        'product',
+        'color',
+        'size',
+        'shape',
+        'desc',
+        'provider_id',
+        'product_type_id',
+        'is_change_image'
+    );
+
+    $uploadTarget = null;
+    if ($_POST['is_change_image'] == "") {
+        paramsCheck(
+            $_FILES,
+            'image'
+        );
+
+        $uploadTarget = uploadImage();
+
+        if (is_null($uploadTarget)) {
+            api_error_response("Không thể tải ảnh lên hệ thống!", false);
+            return;
+        }
+
+    }
+
+    $uploadTargetFinal = is_null($uploadTarget) ? $_POST['is_change_image'] : $uploadTarget;
+    $product = $_POST['product'];
+    $id = $_POST['id'];
+    $color = $_POST['color'];
+    $size = $_POST['size'];
+    $shape = $_POST['shape'];
+    $desc = $_POST['desc'];
+    $providerId = $_POST['provider_id'];
+    $productTypeId = $_POST['product_type_id'];
+
+
+    $query = "
+    UPDATE ThucPham t
+    SET t.ThucPham       = '$product',
+        t.MoTa           = '$desc',
+        t.MauSac         = '$color',
+        t.KichThuoc      = '$size',
+        t.HinhDang       = '$shape',
+        t.ViTriHinhAnh   = '$uploadTargetFinal',
+        t.MaNoiSanXuat   = '$providerId',
+        t.MaLoaiThucPham = '$productTypeId'
+    WHERE t.MaThucPham = '$id'
+    ";
+    
+
+    editResponse(api_query($query));
+}
+
+function deleteProduct()
+{
+    paramsCheck($_GET, 'id');
+
+    $id = $_GET['id'];
+
+    $query = "
+    DELETE FROM ThucPham
+    WHERE MaThucPham = $id
+    ";
+
+    deleteResponse(api_query($query));
+
 }
 
 function getProduct()
@@ -58,16 +189,19 @@ function getProductByLimit()
 function getAllProduct()
 {
     $query = "
-    SELECT ThucPham.MaThucPham, ThucPham.ThucPham, ThucPham.MauSac, ThucPham.KichThuoc, ThucPham.HinhDang, ThucPham.ViTriHinhAnh, ThucPham.NgayTao, noisanxuat.CongTySanXuat, noisanxuat.DiaChi, loaithucpham.LoaiThucPham
+    SELECT ThucPham.MoTa, ThucPham.MaThucPham, ThucPham.ThucPham, ThucPham.MauSac, ThucPham.KichThuoc, ThucPham.HinhDang, ThucPham.ViTriHinhAnh, ThucPham.NgayTao, NoiSanXuat.CongTySanXuat, NoiSanXuat.DiaChi, LTP.LoaiThucPham, NoiSanXuat.MaNoiSanXuat, LTP.MaLoaiThucPham
     FROM ThucPham
-    INNER JOIN noisanxuat  ON noisanxuat.MaNoiSanXuat = ThucPham.MaNoiSanXuat
-    INNER JOIN loaithucpham ON loaithucpham.MaLoaiThucPham = ThucPham.MaLoaiThucPham;
+    INNER JOIN NoiSanXuat  ON NoiSanXuat.MaNoiSanXuat = ThucPham.MaNoiSanXuat
+    INNER JOIN LoaiThucPham LTP on ThucPham.MaLoaiThucPham = LTP.MaLoaiThucPham
     ";
 
     itemsListResponse(api_query($query));
 }
 
-function generateRandomString($length = 10)
+/**
+ * @throws Exception
+ */
+function generateRandomString($length = 10): string
 {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -86,6 +220,7 @@ function addProduct()
         'color',
         'size',
         'shape',
+        'desc',
         'provider_id',
         'product_type_id'
     );
@@ -99,49 +234,20 @@ function addProduct()
     $color = $_POST['color'];
     $size = $_POST['size'];
     $shape = $_POST['shape'];
+    $desc = $_POST['desc'];
     $providerId = $_POST['provider_id'];
     $productTypeId = $_POST['product_type_id'];
 
-    // kiểm tra ảnh có hợp lệ hay không
+    $uploadTarget = uploadImage();
 
-    // kiểm tra ảnh có phải giả
-    $fakeImageCheck = getimagesize($_FILES["image"]["tmp_name"]);
-
-    // kiểm tra đuôi ảnh có hợp lệ
-    // lấy đuôi ảnh
-    $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-    $fileExtensionCheck = true;
-    if (
-        $fileExtensionCheck != "jpg" && $fileExtensionCheck != "jpeg"
-    ) {
-        $fileExtensionCheck = false;
-    }
-
-
-    if ($fakeImageCheck === false || $fileExtensionCheck === false) {
-        api_error_response("Ảnh không hợp lệ!", false);
-        return;
-    }
-
-    // biến vị trí lưu ảnh
-    $targetDir = "uploads/";
-
-
-    // tạo 1 đường dẫn không tồn tại
-    while ($uploadTarget = $targetDir . generateRandomString() . $fileExtension) {
-        if (!file_exists($uploadTarget)) {
-            break;
-        }
-    }
-
-    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $uploadTarget)){
-        api_error_response("Không thể tải ảnh!", false);
+    if (is_null($uploadTarget)) {
+        api_error_response("Không thể tải ảnh lên hệ thống!", false);
         return;
     }
 
     $query = "
-    INSERT INTO thucpham (ThucPham, MauSac, KichThuoc, HinhDang, ViTriHinhAnh, NgayTao, MaNoiSanXuat, MaLoaiThucPham)
-    VALUES ('$product', '$color', '$size', '$shape', '$uploadTarget', NOW(), '$providerId', '$productTypeId')
+    INSERT INTO ThucPham (ThucPham, MauSac, KichThuoc, HinhDang, ViTriHinhAnh, NgayTao, MaNoiSanXuat, MaLoaiThucPham, MoTa)
+    VALUES ('$product', '$color', '$size', '$shape', '$uploadTarget', NOW(), '$providerId', '$productTypeId', $desc)
     ";
 
     insertResponse(api_query($query));
