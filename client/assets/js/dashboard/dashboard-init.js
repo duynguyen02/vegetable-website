@@ -1,11 +1,6 @@
 // các nút trên header
 let logoutButton = select("#dashboard-a-logout");
 // let contactButton = select("#dashboard-a-contact");
-let companyButton = select("#dashboard-a-company-info");
-let adminButton = select("#dashboard-a-admin");
-let productButton = select("#dashboard-a-product");
-let providerButton = select("#dashboard-a-provider");
-let productTypeButton = select("#dashboard-a-product-type");
 let changePasswordButton = select("#dashboard-a-change-password");
 
 // thông báo
