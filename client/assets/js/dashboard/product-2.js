@@ -146,7 +146,6 @@
                     data.append('is_change_image', imageLocation)
                 }
                 else{
-                    console.log("nay nè");
                     data.append('is_change_image', "")
                     data.append('image', img)
                 }
@@ -161,7 +160,7 @@
 
                 }
                 else {
-                    select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
+                    select('#dashboard-sub-notification').innerHTML = res.message
                 }
                 select(`#dashboard-modal-exit`).click();
             }
@@ -248,7 +247,7 @@
                 data.append('color', color)
                 data.append('size', size)
                 data.append('shape', shape)
-                data.append('desc', shape)
+                data.append('desc', desc)
                 data.append('provider_id', providerId)
                 data.append('product_type_id', productTypeId)
                 data.append('image', img)

@@ -23,12 +23,9 @@ function invokeMethodOption()
 
             if ($_GET['method'] == 'add') {
                 addProduct();
-            }
-
-            else if ($_GET['method'] == 'edit') {
+            } else if ($_GET['method'] == 'edit') {
                 editProduct();
-            }
-            else{
+            } else {
                 api_error_response("Phương thức không xác định!", false);
             }
             break;
@@ -45,6 +42,10 @@ function invokeMethodOption()
     }
 }
 
+/**
+ * @return string|null
+ * @throws Exception
+ */
 function uploadImage(): ?string
 {
     // kiểm tra ảnh có hợp lệ hay không
@@ -57,7 +58,7 @@ function uploadImage(): ?string
     $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
     $fileExtensionCheck = true;
     if (
-        $fileExtension != "jpg" && $fileExtension != "jpeg"
+        $fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "webp"
     ) {
         $fileExtensionCheck = false;
     }
@@ -88,7 +89,6 @@ function uploadImage(): ?string
 
 function editProduct()
 {
-
 
 
     paramsCheck(
@@ -143,9 +143,21 @@ function editProduct()
         t.MaLoaiThucPham = '$productTypeId'
     WHERE t.MaThucPham = '$id'
     ";
-    
 
-    editResponse(api_query($query));
+    $oldImageQuery = "
+            SELECT ViTriHinhAnh FROM ThucPham WHERE MaThucPham = $id
+     ";
+
+    $oldImageLocation = mysqli_fetch_assoc(api_query($oldImageQuery))['ViTriHinhAnh'];
+
+
+    if (editResponse(api_query($query))) {
+        try {
+            unlink($oldImageLocation);
+        } catch (Exception $exception) {
+
+        }
+    }
 }
 
 function deleteProduct()
@@ -267,7 +279,7 @@ function addProduct()
 
     $query = "
     INSERT INTO ThucPham (ThucPham, MauSac, KichThuoc, HinhDang, ViTriHinhAnh, NgayTao, MaNoiSanXuat, MaLoaiThucPham, MoTa)
-    VALUES ('$product', '$color', '$size', '$shape', '$uploadTarget', NOW(), '$providerId', '$productTypeId', $desc)
+    VALUES ('$product', '$color', '$size', '$shape', '$uploadTarget', NOW(), '$providerId', '$productTypeId', '$desc')
     ";
 
     insertResponse(api_query($query));

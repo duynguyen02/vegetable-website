@@ -1,4 +1,5 @@
 (function(){
+
     const portfolioList = select("#portfolio-list")
 
     const getProducts = async () => {
@@ -10,13 +11,23 @@
         res.items.forEach(item => {
           let imgSrc = server_url + item.ViTriHinhAnh
           products += `
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <img src="${imgSrc}" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>${item.ThucPham}</h4>
-                <p>${item.MoTa}</p>
-                <a href="./product-detail.html?id=${item.MaThucPham}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card">
+              <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                  <a href="./product-detail.html?id=${item.MaThucPham}" class="text-reset">
+                  <img src="${imgSrc}"
+                  class="w-100 inner-img" />
+                </a>
               </div>
+              <div class="card-body">
+                <a href="./product-detail.html?id=${item.MaThucPham}" class="text-reset">
+                  <h5 class="card-title mb-3"><strong>${item.ThucPham}</strong></h5>
+                </a>
+                <a href="" class="text-reset">
+                  <p>Loại Thực Phẩm: ${item.LoaiThucPham}</p>
+                </a>
+              </div>
+            </div>
           </div>
           `
         });
@@ -29,18 +40,5 @@
   
     getProducts()
   
-    // khởi tạo card sản phẩm tiêu biểu
-    new Swiper(".portfolio-details-slider", {
-      speed: 400,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        type: "bullets",
-        clickable: true,
-      },
-    });
+
 })()

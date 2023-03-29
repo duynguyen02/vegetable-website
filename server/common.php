@@ -83,12 +83,14 @@ function insertResponse($queryResult){
  * @param $queryResult
  * @return void
  */
-function editResponse($queryResult){
+function editResponse($queryResult) : bool{
     if ($queryResult) {
         api_success_response("Thay đổi thông tin thành công!", true);
+        return true;
     } else {
         api_success_response("Thay đổi thông tin thất bại!", false);
     }
+    return false;
 }
 
 /**
