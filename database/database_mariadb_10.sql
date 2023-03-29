@@ -54,15 +54,14 @@ CREATE TABLE QuanTriVien
 
 CREATE TABLE ThongTinCongTy
 (
-    lock      CHAR(1)      NOT NULL,
+    `lock` enum('X') NOT NULL,
     TenCongTy   VARCHAR(255) NOT NULL,
     Email       VARCHAR(255) NOT NULL,
     SoDienThoai VARCHAR(255) NOT NULL,
     DiaChi      VARCHAR(255) NOT NULL,
     NgayTao     DATETIME     NOT NULL,
 
-    CONSTRAINT PK_T1 PRIMARY KEY (lock),
-    CONSTRAINT CK_T1_Locked CHECK (lock = 'X')
+    CONSTRAINT PK_T1 PRIMARY KEY (`lock`)
 );
 
 
@@ -92,7 +91,7 @@ VALUES (SHA1('123456'),
         'admin@admin.com',
         NOW());
 
-INSERT INTO ThongTinCongTy('lock', TenCongTy, Email, SoDienThoai, DiaChi, NgayTao)
+INSERT INTO ThongTinCongTy(`lock`, TenCongTy, Email, SoDienThoai, DiaChi, NgayTao)
 VALUES ('X',
         'Tiānxià Wǔjué Corporation',
         'tianxiawujue@admin.com',

@@ -180,10 +180,30 @@ function getProduct()
 
 function getProductById()
 {
+    $id = $_GET['id'];
+    $query = "
+    SELECT ThucPham.MoTa, ThucPham.MaThucPham, ThucPham.ThucPham, ThucPham.MauSac, ThucPham.KichThuoc, ThucPham.HinhDang, ThucPham.ViTriHinhAnh, ThucPham.NgayTao, NoiSanXuat.CongTySanXuat, NoiSanXuat.DiaChi, LTP.LoaiThucPham, NoiSanXuat.MaNoiSanXuat, LTP.MaLoaiThucPham
+    FROM ThucPham
+    INNER JOIN NoiSanXuat  ON NoiSanXuat.MaNoiSanXuat = ThucPham.MaNoiSanXuat
+    INNER JOIN LoaiThucPham LTP on ThucPham.MaLoaiThucPham = LTP.MaLoaiThucPham
+    WHERE ThucPham.MaThucPham = $id
+    ";
+
+    itemsListResponse(api_query($query));
 }
 
 function getProductByLimit()
 {
+    $limit = $_GET['limit'];
+    $query = "
+    SELECT ThucPham.MoTa, ThucPham.MaThucPham, ThucPham.ThucPham, ThucPham.MauSac, ThucPham.KichThuoc, ThucPham.HinhDang, ThucPham.ViTriHinhAnh, ThucPham.NgayTao, NoiSanXuat.CongTySanXuat, NoiSanXuat.DiaChi, LTP.LoaiThucPham, NoiSanXuat.MaNoiSanXuat, LTP.MaLoaiThucPham
+    FROM ThucPham
+    INNER JOIN NoiSanXuat  ON NoiSanXuat.MaNoiSanXuat = ThucPham.MaNoiSanXuat
+    INNER JOIN LoaiThucPham LTP on ThucPham.MaLoaiThucPham = LTP.MaLoaiThucPham
+    LIMIT $limit
+    ";
+
+    itemsListResponse(api_query($query));
 }
 
 function getAllProduct()
