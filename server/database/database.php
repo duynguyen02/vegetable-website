@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * hàm liên kết php với cơ sở dữ liệu
+ */
 function getConnection(){
     return mysqli_connect(
         DB_HOST,

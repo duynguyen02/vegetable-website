@@ -153,7 +153,9 @@ function editProduct()
 
     if (editResponse(api_query($query))) {
         try {
-            unlink($oldImageLocation);
+            if ($_POST['is_change_image'] == ""){
+                unlink($oldImageLocation);
+            }
         } catch (Exception $exception) {
 
         }
