@@ -143,10 +143,10 @@
 
                 
                 if (img == undefined){
-                    data.append('is_change_image', imageLocation)
+                    data.append('is_change_image', false)
                 }
                 else{
-                    data.append('is_change_image', "")
+                    data.append('is_change_image', true)
                     data.append('image', img)
                 }
 

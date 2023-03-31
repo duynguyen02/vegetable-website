@@ -240,26 +240,20 @@ const validateEmail = (email) => {
       return;
     }
 
-    let companyAddress = select(".company-address", true);
-    let companyEmail = select(".company-email", true);
-    let companyPhoneNumber = select(".company-phone-address", true);
+    let companyAddress = select(".company-address");
+    let companyEmail = select(".company-email");
+    let companyPhoneNumber = select(".company-phone-address");
 
     if (companyAddress) {
-      companyAddress.forEach((e) => {
-        e.innerHTML = info.DiaChi;
-      });
+        companyAddress.innerHTML = info.DiaChi;
     }
 
     if (companyEmail) {
-      companyEmail.forEach((e) => {
-        e.innerHTML = info.Email;
-      });
+        companyEmail.innerHTML = info.Email;
     }
 
     if (companyPhoneNumber) {
-      companyPhoneNumber.forEach((e) => {
-        e.innerHTML = info.SoDienThoai;
-      });
+        companyPhoneNumber.innerHTML = info.SoDienThoai;
     }
   };
 

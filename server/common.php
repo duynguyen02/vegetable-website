@@ -50,6 +50,7 @@ function paramsCheck($variable,string ...$args){
 }
 
 /**
+ * phản hồi cho các truy vấn trả về kết quả
  * @param $queryResult
  * @return void
  */
@@ -68,6 +69,7 @@ function itemsListResponse($queryResult){
 }
 
 /**
+ * phản hồi cho truy vấn phương thức thêm 
  * @param $queryResult
  * @return void
  */
@@ -80,6 +82,7 @@ function insertResponse($queryResult){
 }
 
 /**
+ * phản hồi cho truy vấn phương thức sửa
  * @param $queryResult
  * @return void
  */
@@ -94,6 +97,7 @@ function editResponse($queryResult) : bool{
 }
 
 /**
+ * phản hồi cho truy vấn phương thức xóa
  * @param $queryResult
  * @return void
  */

@@ -7,11 +7,13 @@ require_once __DIR__."/session/session.php";
  * @return void
  */
 function tryToLogout(){
-    if(isAvailableSession()){
+    if(isAvailableSession()){ // nếu session hợp lệ
+        // xóa session
         destroySession();
+        // trả về phản hồi thành công
         api_success_response("Đăng xuất thành công!", true);
     }
-    else{
+    else{ // nếu session không hợp lệ thì trả phản hồi lỗi
         api_error_response("Không thể đăng xuất do chưa đăng nhập!", false);
     }
 }

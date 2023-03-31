@@ -16,16 +16,17 @@ function invokeMethodOption()
     switch ($method) {
         case "POST":
         {
+            // kiểm tra đối số clent truyền lên có hợp lệ
             paramsCheck(
                 $_GET,
                 'method'
             );
 
-            if ($_GET['method'] == 'add') {
+            if ($_GET['method'] == 'add') { // nếu đối số method là add thì thực hiện hàm addProduct
                 addProduct();
-            } else if ($_GET['method'] == 'edit') {
+            } else if ($_GET['method'] == 'edit') { // nếu đối số method là edit thì thực hiện hàm editProduct
                 editProduct();
-            } else {
+            } else { // nếu đối số method không hợp lệ thì trả phản hồi lỗi và kết thúc phiên làm việc
                 api_error_response("Phương thức không xác định!", false);
             }
             break;
@@ -43,13 +44,13 @@ function invokeMethodOption()
 }
 
 /**
+ * tải ảnh lên máy chủ
  * @return string|null
  * @throws Exception
  */
 function uploadImage(): ?string
 {
     // kiểm tra ảnh có hợp lệ hay không
-
     // kiểm tra ảnh có phải giả
     $fakeImageCheck = getimagesize($_FILES["image"]["tmp_name"]);
 
@@ -63,7 +64,8 @@ function uploadImage(): ?string
         $fileExtensionCheck = false;
     }
 
-
+    // nếu không phải là ảnh hoặc đuôi ảnh không hợp lệ
+    // thì trả về null
     if ($fakeImageCheck === false || $fileExtensionCheck === false) {
         return null;
     }
@@ -79,17 +81,23 @@ function uploadImage(): ?string
         }
     }
 
+    // nếu tải ảnh không thành công thì trả về null
     if (!move_uploaded_file($_FILES["image"]["tmp_name"], $uploadTarget)) {
         return null;
     }
 
+    // tải ảnh lên thành công thì trả về địa chỉ hình ảnh trên máy chủ
     return $uploadTarget;
 
 }
 
+/**
+ * thay đổi thông tin sản phẩm  
+ * @return void
+ * @throws Exception
+ */
 function editProduct()
 {
-
 
     paramsCheck(
         $_POST,
@@ -104,25 +112,48 @@ function editProduct()
         'is_change_image'
     );
 
+    // tạo một biến địa chỉ hình ảnh tạm thời
+    // nếu quản trị thay đổi hình ảnh
     $uploadTarget = null;
-    if ($_POST['is_change_image'] == "") {
+
+    // nếu đối số is_change_image là true thì 
+    // quản trị muốn thay đổi hình ảnh
+    if ($_POST['is_change_image'] === "true") {
+
+        // kiểm tra đối số có hợp lệ
         paramsCheck(
             $_FILES,
             'image'
         );
 
+        // tải hình ảnh lên
         $uploadTarget = uploadImage();
 
+        // nếu $uploadTarget vẫn giá trị null thì ảnh 
+        // không thể tải lên và kết thúc phiên làm việc
         if (is_null($uploadTarget)) {
             api_error_response("Không thể tải ảnh lên hệ thống!", false);
             return;
         }
-
     }
 
-    $uploadTargetFinal = is_null($uploadTarget) ? $_POST['is_change_image'] : $uploadTarget;
-    $product = $_POST['product'];
+    // lấy id của sản phẩm
     $id = $_POST['id'];
+
+    // xây dựng truy vấn để lấy đường dẫn ảnh cũ
+    $oldImageQuery = "
+    SELECT ViTriHinhAnh FROM ThucPham WHERE MaThucPham = $id
+    ";  
+
+    // truy vấn lấy địa chỉ ảnh cũ
+    $oldImageLocation = mysqli_fetch_assoc(api_query($oldImageQuery))['ViTriHinhAnh'];
+
+    // nếu is_change_image là true thì đường dẫn ảnh của sản phẩm là uploadTarget 
+    // còn không thì là oldImageLocation
+    $uploadTargetFinal = $_POST['is_change_image'] === "true" ? $uploadTarget : $oldImageLocation;
+
+    // lấy các giá trị từ các đối số
+    $product = $_POST['product'];
     $color = $_POST['color'];
     $size = $_POST['size'];
     $shape = $_POST['shape'];
@@ -130,7 +161,7 @@ function editProduct()
     $providerId = $_POST['provider_id'];
     $productTypeId = $_POST['product_type_id'];
 
-
+    // xây dựng truy vấn thay đổi thông tin sản phẩm
     $query = "
     UPDATE ThucPham t
     SET t.ThucPham       = '$product',
@@ -144,22 +175,26 @@ function editProduct()
     WHERE t.MaThucPham = '$id'
     ";
 
-    $oldImageQuery = "
-            SELECT ViTriHinhAnh FROM ThucPham WHERE MaThucPham = $id
-     ";
-
-    $oldImageLocation = mysqli_fetch_assoc(api_query($oldImageQuery))['ViTriHinhAnh'];
-
-
+    // nếu truy vấn thành công
     if (editResponse(api_query($query))) {
-        try {
-            unlink($oldImageLocation);
-        } catch (Exception $exception) {
-
+        // xóa ảnh cũ nếu đối số is_change_image có giá trị là true
+        if ($_POST['is_change_image'] === "true"){
+            try {
+                // nếu ảnh có tồn tại thì xóa
+                if (file_exists($oldImageLocation)) {
+                    unlink($oldImageLocation);
+                }
+            } catch (Exception $exception) {
+    
+            }
         }
     }
 }
 
+/**
+ * xóa sản phẩm
+ * @return void
+ */
 function deleteProduct()
 {
     paramsCheck($_GET, 'id');
@@ -175,6 +210,10 @@ function deleteProduct()
 
 }
 
+/**
+ * lấy thông tin sản phẩm
+ * @return void
+ */
 function getProduct()
 {
     if (isset($_GET['id'])) {
@@ -190,6 +229,10 @@ function getProduct()
     getAllProduct();
 }
 
+/**
+ * lấy thông tin sản phẩm thông qua id
+ * @return void
+ */
 function getProductById()
 {
     $id = $_GET['id'];
@@ -204,6 +247,10 @@ function getProductById()
     itemsListResponse(api_query($query));
 }
 
+/**
+ * lấy số thông tin sản phẩm giới hạn
+ * @return void
+ */
 function getProductByLimit()
 {
     $limit = $_GET['limit'];
@@ -218,6 +265,10 @@ function getProductByLimit()
     itemsListResponse(api_query($query));
 }
 
+/**
+ * lấy thông tin toàn bộ sản phẩm
+ * @return void
+ */
 function getAllProduct()
 {
     $query = "
@@ -231,6 +282,7 @@ function getAllProduct()
 }
 
 /**
+ * khởi tạo một chuỗi ngẫu nhiên
  * @throws Exception
  */
 function generateRandomString($length = 10): string
@@ -244,6 +296,11 @@ function generateRandomString($length = 10): string
     return $randomString;
 }
 
+/**
+ * thêm sản phẩm 
+ * @return void
+ * @throws Exception
+ */
 function addProduct()
 {
     paramsCheck(
