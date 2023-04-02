@@ -5,7 +5,7 @@ let protocol = window.location.protocol;
 let server_url = `${protocol}//${hostname}/vegetable-website/server/`;
 
 /**
- *
+ * chọn các tag theo tên class/id chỉ định
  */
 const select = (el, all = false) => {
   el = el.trim();
@@ -17,7 +17,7 @@ const select = (el, all = false) => {
 };
 
 /**
- *
+ * cài sự kiện cho các tag
  */
 const on = (type, el, listener, all = false) => {
   let selectEl = select(el, all);
@@ -31,14 +31,14 @@ const on = (type, el, listener, all = false) => {
 };
 
 /**
- *
+ * cài hành động cho sự kiện scroll
  */
 const onscroll = (el, listener) => {
   el.addEventListener("scroll", listener);
 };
 
 /**
- *
+ * thực hiện request với phương thức GET
  */
 const getRequest = async (url) => {
   try {
@@ -56,7 +56,7 @@ const getRequest = async (url) => {
 };
 
 /**
- *
+ * thực hiện request với phương thức POST
  */
 const postRequest = async (url, body) => {
   try {
@@ -74,6 +74,13 @@ const postRequest = async (url, body) => {
   }
 };
 
+
+/**
+ * thực hiện request với phương thức POST với FormData
+ * @param {string} url 
+ * @param {json} body 
+ * @returns 
+ */
 const postRequestWithFormData = async (url, body) => {
   try {
     let res = await fetch(server_url + url, {
@@ -95,7 +102,7 @@ const postRequestWithFormData = async (url, body) => {
 
 
 /**
- *
+ * thực hiện request với phương thức PUT
  */
 const putRequest = async (url, body) => {
   try {
@@ -114,7 +121,7 @@ const putRequest = async (url, body) => {
 };
 
 /**
- *
+ * thực hiện request với phương thức DELETE
  */
 const deleteRequest = async (url) => {
   try {
@@ -132,7 +139,7 @@ const deleteRequest = async (url) => {
 };
 
 /**
- * 
+ * Kiểm tra xem email có hợp lệ hay không
  * @param {*} email 
  * @returns 
  */
@@ -164,7 +171,7 @@ const validateEmail = (email) => {
   }
 
   /**
-   * Mobile nav toggle
+   * gán sự kiện click cho nút thoát ở chế độ giao diện di động
    */
   on("click", ".mobile-nav-toggle", function (e) {
     select("#navbar").classList.toggle("navbar-mobile");
@@ -173,7 +180,7 @@ const validateEmail = (email) => {
   });
 
   /**
-   * Mobile nav dropdowns activate
+   * gán sự kiện click cho nút menu ở chế độ giao diện di động
    */
   on(
     "click",
@@ -188,61 +195,25 @@ const validateEmail = (email) => {
   );
 
   /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: ".glightbox",
-  });
-
-  const portfolioLightbox = GLightbox({
-    selector: ".portfolio-lightbox",
-  });
-
-  /**
-   * Porfolio isotope and filter
-   */
-  window.addEventListener("load", () => {
-    let portfolioContainer = select(".portfolio-container");
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: ".portfolio-item",
-      });
-
-      let portfolioFilters = select("#portfolio-flters li", true);
-
-      on(
-        "click",
-        "#portfolio-flters li",
-        function (e) {
-          e.preventDefault();
-          portfolioFilters.forEach(function (el) {
-            el.classList.remove("filter-active");
-          });
-          this.classList.add("filter-active");
-
-          portfolioIsotope.arrange({
-            filter: this.getAttribute("data-filter"),
-          });
-        },
-        true
-      );
-    }
-  });
-
-  /**
    * Hàm thiết lập các thông tin của công ty
    * @returns
    */
   const setCompanyInfo = async () => {
+
+    // yêu cầu dữ liệu từ server
     let info = await getRequest("companyInfo.php");
 
+    // nếu yêu cầu dữ liệu không thành công thì trả về
     if (!info) {
       return;
     }
 
+    // lấy các tag cần thiết
     let companyAddress = select(".company-address");
     let companyEmail = select(".company-email");
     let companyPhoneNumber = select(".company-phone-address");
+
+    // nếu các tag khả dụng thì gán dữ liệu vào
 
     if (companyAddress) {
         companyAddress.innerHTML = info.DiaChi;

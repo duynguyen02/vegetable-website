@@ -11,11 +11,11 @@
             let res = await deleteRequest(`admin.php?id=${id}`)
 
             if (res.status == true) {
-                select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
+                setSubNotification(`Xóa thành công! ID: ${id}`)
                 select(`#admin-${item.MaTaiKhoan}`).remove();
             }
             else {
-                select('#dashboard-sub-notification').innerHTML = res.message
+                setSubNotification(res.message)
             }
             select(`#dashboard-modal-exit`).click();
         }
@@ -153,7 +153,7 @@
                             })
 
                             if (resM.status == true) {
-                                select('#dashboard-sub-notification').innerHTML = resM.message
+                                setSubNotification(resM.message)
                                 let res = await getRequest('admin.php')
 
                                 if (res.status == true) {
@@ -165,7 +165,7 @@
 
                             }
                             else {
-                                select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
+                                setSubNotification("Lỗi không xác định")
                             }
                             select(`#dashboard-modal-exit`).click();
 

@@ -51,7 +51,7 @@
                 let companyAddress = select("#dashboard-company-address").value
 
                 if(!companyName || !companyPhone || !companyEmail || !companyAddress){
-                    select('#dashboard-sub-notification').innerHTML = "Vui lòng nhập thông tin hợp lệ!"
+                    setSubNotification("Vui lòng nhập thông tin hợp lệ!")
                     select(`#dashboard-modal-exit`).click();
                     return
                 }
@@ -66,7 +66,7 @@
                     })
                     
                     if (res.status == true){
-                        select('#dashboard-sub-notification').innerHTML = "Sửa thành công!"
+                        setSubNotification("Sửa thành công!")
                         select(`#company-${companyPhone}`).innerHTML = `
                         <tr id="company-${companyPhone}" >
                             <th scope="row">${companyName}</th>
@@ -84,7 +84,7 @@
                         
                     }
                     else{
-                        select('#dashboard-sub-notification').innerHTML = res.message
+                        setSubNotification(res.message)
                     }
                     select(`#dashboard-modal-exit`).click();
             

@@ -155,12 +155,12 @@
                 let res = await postRequestWithFormData('product.php?method=edit', data)
 
                 if (res.status == true) {
-                    select('#dashboard-sub-notification').innerHTML = res.message
+                    setSubNotification(res.message)
                     renderDashboard()
 
                 }
                 else {
-                    select('#dashboard-sub-notification').innerHTML = res.message
+                    setSubNotification(res.message)
                 }
                 select(`#dashboard-modal-exit`).click();
             }
@@ -185,11 +185,11 @@
                         let res = await deleteRequest(`product.php?id=${id}`)
 
                         if (res.status == true) {
-                            select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
+                            setSubNotification(`Xóa thành công! ID: ${id}`)
                             select(`#product-${item.MaThucPham}`).remove();
                         }
                         else {
-                            select('#dashboard-sub-notification').innerHTML = res.message
+                            setSubNotification(res.message)
                         }
                         select(`#dashboard-modal-exit`).click();
                     }
@@ -255,12 +255,12 @@
                 let res = await postRequestWithFormData('product.php?method=add', data)
 
                 if (res.status == true) {
-                    select('#dashboard-sub-notification').innerHTML = res.message
+                    setSubNotification(res.message)
                     renderDashboard()
 
                 }
                 else {
-                    select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
+                    setSubNotification("Lỗi không xác định")
                 }
                 select(`#dashboard-modal-exit`).click();
             }

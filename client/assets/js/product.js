@@ -1,16 +1,23 @@
-(function(){
+(function () {
 
-    const portfolioList = select("#portfolio-list")
+  // chọn tag cần đổ dữ liệu
+  const portfolioList = select("#portfolio-list")
 
-    const getProducts = async () => {
-      let res = await getRequest('product.php')
-  
-      if (res.status == true) {
-        let products = ``
-  
-        res.items.forEach(item => {
-          let imgSrc = server_url + item.ViTriHinhAnh
-          products += `
+  /**
+   * lấy sản phẩm từ server và gán vào tag
+   */
+  const getProducts = async () => {
+
+    // yêu cầu dữ liệu từ server
+    let res = await getRequest('product.php')
+
+    // nếu lấy dữ liệu thành công thì 
+    if (res.status == true) {
+      let products = ``
+
+      res.items.forEach(item => {
+        let imgSrc = server_url + item.ViTriHinhAnh
+        products += `
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card">
               <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
@@ -30,15 +37,15 @@
             </div>
           </div>
           `
-        });
-  
-        portfolioList.innerHTML = products
-  
-      }
-  
+      });
+
+      portfolioList.innerHTML = products
+
     }
-  
-    getProducts()
-  
+
+  }
+
+  getProducts()
+
 
 })()

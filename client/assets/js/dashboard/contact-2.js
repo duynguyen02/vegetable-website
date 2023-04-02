@@ -12,11 +12,11 @@
             let res = await deleteRequest(`contact.php?method=message&id=${id}`)
 
             if (res.status == true) {
-                select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
+                setSubNotification(`Xóa thành công! ID: ${id}`)
                 select(`#contact-${item.MaLienHe}`).remove();
             }
             else {
-                select('#dashboard-sub-notification').innerHTML = res.message
+                setSubNotification(res.message)
             }
             select(`#dashboard-modal-exit`).click();
         }

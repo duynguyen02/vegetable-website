@@ -86,11 +86,11 @@
                         let res = await deleteRequest(`provider.php?id=${id}`)
 
                         if (res.status == true) {
-                            select('#dashboard-sub-notification').innerHTML = `Xóa thành công! ID: ${id}`
+                             setSubNotification(`Xóa thành công! ID: ${id}`)
                             select(`#provider-${item.MaNoiSanXuat}`).remove();
                         }
                         else {
-                            select('#dashboard-sub-notification').innerHTML = res.message
+                             setSubNotification(res.message)
                         }
                         select(`#dashboard-modal-exit`).click();
                     }
@@ -129,12 +129,12 @@
                 })
 
                 if (res.status == true){
-                    select('#dashboard-sub-notification').innerHTML = res.message
+                     setSubNotification(res.message)
                     renderDashboard()
 
                 }
                 else{
-                    select('#dashboard-sub-notification').innerHTML = "Lỗi không xác định"
+                     setSubNotification("Lỗi không xác định")
                 }
                 select(`#dashboard-modal-exit`).click();
 

@@ -1,8 +1,6 @@
 (function () {
   "use strict";
 
-
-
   // khởi tạo card đánh giá của khách hàng
   new Swiper(".testimonials-slider", {
     speed: 600,
@@ -30,20 +28,27 @@
     },
   });
 
+  // chọn tag chứa danh sách sản phẩm
   const portfolioList = select("#portfolio-list")
 
+  /**
+   * lấy sản phẩm từ server và đổ vào giao diện
+   */
   const getProducts = async () => {
+
+    // lấy 6 sản phẩm trong cơ sở dữ liệu
     let res = await getRequest('product.php?limit=6')
 
-    if (res.status == true) {
+    if (res.status == true) { // nếu yêu cầu dữ liệu thành công
       let products = ``
 
+      // xây dựng HTML cho từng sản phẩm
       res.items.forEach(item => {
         let imgSrc = server_url + item.ViTriHinhAnh
         products += `
         <div class="col-lg-4 col-md-6 mb-4">
         <div class="card">
-          <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+          <div class="bg-image hover-zoom" data-mdb-ripple-color="light">
               <a href="./product-detail.html?id=${item.MaThucPham}" class="text-reset">
               <img src="${imgSrc}"
               class="w-100 inner-img" />
