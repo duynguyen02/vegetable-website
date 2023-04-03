@@ -59,7 +59,7 @@ function uploadImage(): ?string
     $fileExtension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
     $fileExtensionCheck = true;
     if (
-        $fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "webp"
+        $fileExtension != "jpg" && $fileExtension != "jpeg" && $fileExtension != "webp" && $fileExtension != "png"
     ) {
         $fileExtensionCheck = false;
     }
