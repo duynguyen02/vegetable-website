@@ -271,8 +271,8 @@ GET {tên miền của bạn}/vegetable-website/server/companyInfo.php
 <code>
 {
   "lock": "X",
-  "TenCongTy": "Tiānxià Wǔjué Corporation",
-  "Email": "tianxiawujue@admin.com",
+  "TenCongTy": "Măng Non Corporation",
+  "Email": "mangnon@admin.com",
   "SoDienThoai": "0897562341",
   "DiaChi": "TP. HCM",
   "NgayTao": "2023-03-22 02:37:19"
