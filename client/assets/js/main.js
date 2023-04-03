@@ -209,22 +209,31 @@ const validateEmail = (email) => {
     }
 
     // lấy các tag cần thiết
-    let companyAddress = select(".company-address");
-    let companyEmail = select(".company-email");
-    let companyPhoneNumber = select(".company-phone-address");
+    let companyAddress = select(".company-address", true);
+    let companyEmail = select(".company-email", true);
+    let companyPhoneNumber = select(".company-phone-address", true);
 
     // nếu các tag khả dụng thì gán dữ liệu vào
 
     if (companyAddress) {
-        companyAddress.innerHTML = info.DiaChi;
+
+      companyAddress.forEach(element => {
+        element.innerHTML = info.DiaChi;
+      });
+
     }
 
     if (companyEmail) {
-        companyEmail.innerHTML = info.Email;
+
+      companyEmail.forEach(element => {
+        element.innerHTML = info.Email;
+      });
     }
 
     if (companyPhoneNumber) {
-        companyPhoneNumber.innerHTML = info.SoDienThoai;
+      companyPhoneNumber.forEach(element => {
+        element.innerHTML = info.SoDienThoai;
+      });
     }
   };
 
