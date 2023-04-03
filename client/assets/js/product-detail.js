@@ -72,10 +72,11 @@
                         <li><strong>Màu Sắc</strong>: ${item.MauSac}</li>
                         <li><strong>Nguồn Cung Cấp</strong>: ${item.CongTySanXuat}</li>
                         <li><strong>Địa Chỉ</strong>: ${item.DiaChi}</li>
-                        <li><h2><a href="./contact.html" >LIÊN HỆ NGAY</a></h2></li>
+                        
                     </ul>
                     </div>
                     <div class="portfolio-description">
+                    <h2><a href="./contact.html" >LIÊN HỆ NGAY</a></h2>
                     <h2>Mô Tả</h2>
                     <p>
                         ${item.MoTa}
