@@ -1,0 +1,11 @@
+- copy toàn bộ thư mục chứa mã nguồn (vagetable-website) vào xampp/htdocs
+- sau khi copy xong, vào thư mục xampp/htdocs/vegetable-website/server/inc sửa tên file config.example.php thành config.php
+- chỉnh các giá trị thông tin của cơ sở dữ liệu theo thông tin máy (tên cơ sở dữ liệu mặc định là vegetable_showroom không chỉnh sửa) ví dụ:
+const DB_HOST = "localhost";
+const DB_USERNAME = "root";
+const DB_PASSWORD = "";
+const DB_DATABASE_NAME = "vegetable_showroom";
+- vào phpmyadmin và import file database_mariadb_10.sql tại xampp/htdocs/vegetable-website/database
+- khởi chạy giao diện web tại địa chỉ http://localhost/vegetable-website/client/
+- để vào trang quản trị, kéo xuống cuối web và click vào chữ Măng Non Corporation màu xanh lá cay
+- tài khoản mặc định là admin@admin.com và mật khẩu là 123456

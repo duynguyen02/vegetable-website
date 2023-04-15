@@ -14,14 +14,14 @@ CREATE TABLE NoiSanXuat
     DiaChi        VARCHAR (255) NOT NULL,
     NgayTao       DATETIME     NOT NULL,
     PRIMARY KEY (MaNoiSanXuat)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 CREATE TABLE LoaiThucPham
 (
     MaLoaiThucPham INT AUTO_INCREMENT,
     LoaiThucPham   VARCHAR (255) NOT NULL,
     NgayTao        DATETIME     NOT NULL,
     PRIMARY KEY (MaLoaiThucPham)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE ThucPham
 (
@@ -39,8 +39,7 @@ CREATE TABLE ThucPham
     CONSTRAINT FK_MaNoiSanXuat FOREIGN KEY (MaNoiSanXuat) REFERENCES NoiSanXuat (MaNoiSanXuat) ON DELETE SET NULL,
     CONSTRAINT FK_MaLoaiThucPham FOREIGN KEY (MaLoaiThucPham) REFERENCES LoaiThucPham (MaLoaiThucPham) ON DELETE SET NULL,
     PRIMARY KEY (MaThucPham)
-);
-
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE QuanTriVien
 (
@@ -49,7 +48,7 @@ CREATE TABLE QuanTriVien
     Email      VARCHAR(255) UNIQUE NOT NULL,
     NgayTao    DATETIME            NOT NULL,
     PRIMARY KEY (MaTaiKhoan)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE ThongTinCongTy
 (
@@ -61,7 +60,7 @@ CREATE TABLE ThongTinCongTy
     NgayTao     DATETIME     NOT NULL,
 
     CONSTRAINT PK_T1 PRIMARY KEY (`lock`)
-);
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 CREATE TABLE KhachHang
@@ -71,7 +70,7 @@ CREATE TABLE KhachHang
     SoDienThoai VARCHAR(255) NOT NULL,
     Email       VARCHAR(255) NOT NULL,
     PRIMARY KEY (MaKhachHang)
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE LienHe
 (
@@ -83,7 +82,7 @@ CREATE TABLE LienHe
 
     MaKhachHang INT,
     CONSTRAINT FK_MaKhachHang FOREIGN KEY (MaKhachHang) REFERENCES KhachHang (MaKhachHang) ON DELETE CASCADE
-);
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO QuanTriVien(MatKhau, Email, NgayTao)
 VALUES (SHA1('123456'),
