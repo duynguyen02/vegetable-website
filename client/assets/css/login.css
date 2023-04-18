@@ -13,18 +13,6 @@
     margin-bottom: 1rem;
 }
 
-body:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: '';
-    background: #f9f9fa;
-    opacity: .3;
-    z-index: -1;
-}
-
 .ftco-section {
     padding: 7em 0;
 }
